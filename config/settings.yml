@@ -1,0 +1,11 @@
+development:
+  test_redis: <%= ENV.fetch('TEST_REDIS', 'false') %>
+  sidekiq_inline: <%= ENV.fetch('SIDEKIQ_INLINE', 'false') %>
+
+test:
+  test_redis: true
+  sidekiq_inline: false
+
+production:
+  test_redis: false
+  sidekiq_inline: false
