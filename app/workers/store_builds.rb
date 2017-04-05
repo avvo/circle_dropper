@@ -20,12 +20,31 @@ class StoreBuilds
           if artifacts.body.size > 0
             artifacts.body.each do |artifact|
               uri = URI.parse(artifact['url'])
-              uri.query = {token: CircleCi.config.token}.to_query
+              uri.query = {'circle-token' => CircleCi.config.token}.to_query
 
               if uri.path.include?('circle-junit')
                 artifact_data = Net::HTTP.get(uri)
                 if artifact_data.present?
-                  # Write this to s3 if it is not there yet
+                  s3 = Aws::S3::Client.new
+
+                  filename = uri.path.split('/').last;
+
+                  project_name = "#{build['username']}_#{build['reponame']}"
+                  suite_name = "SUITE=#{uri.path.split('/')[-2]}"
+                  build_number = "build_number_#{build['build_num']}"
+
+
+                  full_path = "#{project_name}/#{suite_name}/#{build_number}/#{filename}"
+
+                  s3.put_object(
+                    bucket: ENV['AWS_BUCKET'],
+                    key: full_path,
+                    body: artifact_data,
+                    acl: 'authenticated-read',
+                    content_type: "text/xml"
+                  )
+                else
+                  warn "Artifact has no data - #{uri.to_s}"
                 end
               end
             end

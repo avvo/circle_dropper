@@ -5,6 +5,7 @@ gem 'sinatra'
 gem 'sidekiq'
 gem 'sidetiq'
 gem 'circleci'
+gem 'aws-sdk', '~> 2'
 gem 'dotenv-rails'
 
 group :development, :test do

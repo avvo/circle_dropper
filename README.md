@@ -1,28 +1,14 @@
-== README
+This system moves circleCI junit artifacts into S3.  They could be retrieved by anything, including an awesome [JUnit visualizer](https://github.com/avvo/junit_visualizer).
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+These environment variables are required:
 
-Things you may want to cover:
+CIRCLE_CI_TOKEN
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_BUCKET
+AWS_REGION (where the bucket is you want to write to)
 
-* Ruby version
+[Get a circleCI token](https://circleci.com/account/api)
+Learn more about [AWS environment variables](https://github.com/aws/aws-sdk-ruby)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+This system uses sidekiq and redis.
