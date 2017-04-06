@@ -1,0 +1,17 @@
+service_name: circle_dropper
+stack_name: circle_dropper
+image: avvo/circle_dropper
+facing: backend
+pre-deploy: false
+post-deploy: false
+start_before_stop: false
+
+additional_services:
+  redis:
+    image: redis:3.0
+    service_port: 6379
+    container_name: redis
+
+workers:
+  - name: sidekiq
+    command: bin/sidekiq
