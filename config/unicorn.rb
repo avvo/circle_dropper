@@ -1,6 +1,6 @@
 worker_processes ENV['WORKERS'].to_i
 working_directory ENV.fetch('APP_HOME', '/srv/circle_dropper/current')
-listen '0.0.0.0:4098', :tcp_nopush => true
+listen '0.0.0.0:3000', :tcp_nopush => true
 timeout 15
 pid nil
 preload_app true

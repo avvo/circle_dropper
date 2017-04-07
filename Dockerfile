@@ -26,5 +26,8 @@ ARG SOURCE_COMMIT=0
 RUN echo $SOURCE_COMMIT
 ENV COMMIT_HASH $SOURCE_COMMIT
 
+RUN DOCKER_BUILD=true bin/rake assets:precompile
+
+EXPOSE 3000
 ENTRYPOINT ["bin/unicorn"]
 CMD ["-c", "config/unicorn.rb"]
