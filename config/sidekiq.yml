@@ -8,8 +8,8 @@ test:
 
 stag:
   url: 'redis://localhost:6379/12'
-  namespace: 'ship-it-sidekiq'
+  namespace: 'circle-dropper-sidekiq'
 
 production:
   url: 'redis://localhost:6379/12'
-  namespace: 'ship-it-sidekiq'
+  namespace: 'circle-dropper-sidekiq'
