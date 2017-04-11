@@ -13,7 +13,9 @@ class StoreBuilds
     recent_builds = CircleCi::RecentBuilds.get
     if recent_builds.success?
       recent_builds.body.each do |build|
-        process_build(build)
+        if process_build?(build)
+          process_build(build)
+        end
       end
     else
       raise 'Could not get recent build data'
@@ -90,6 +92,14 @@ class StoreBuilds
     true
   rescue Aws::S3::Errors::NoSuchKey
     false
+  end
+
+  def process_build?(build)
+    branches.blank? || branches.include?(build['branch'].downcase)
+  end
+
+  def branches
+    @branches ||= ENV.fetch('BRANCHES', '').split(',').map(&:strip).map(&:downcase)
   end
 
 end

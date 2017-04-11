@@ -16,4 +16,11 @@ These environment variables are required:
 
 Learn more about [AWS environment variables](https://github.com/aws/aws-sdk-ruby)
 
+Optional environment variables:
+
+* BRANCHES - specify a csv of branches and we will pull only those.  For example if you want to collect data only for master, set BRANCHES=master
+
+A docker image of this project is available at https://hub.docker.com/r/avvo/circle_dropper/
+To set up fully in docker, deploy that container twice, and link one to the other.  Set the second linked container's deploy command to bin/sidekiq.  Then link a redis container (probably redis:3.0-alpine) to BOTH circle_dropper containers.  Then set the above required environment variables on the two circle_dropper containers.
+
 This system uses sidekiq and redis.
