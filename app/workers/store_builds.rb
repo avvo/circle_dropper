@@ -43,8 +43,11 @@ class StoreBuilds
 
     if junit_artifact?(uri)
       artifact_data = Net::HTTP.get(uri)
-      if artifact_data.present?
-        save_in_s3(uri, build, artifact_data)
+
+      s3_key = artifact_s3_path(uri, build)
+
+      if artifact_data.present? && !present_in_s3?(s3_key)
+        save_in_s3(s3_key, artifact_data)
       else
         warn "Artifact has no data - #{uri.to_s}"
       end
@@ -65,16 +68,28 @@ class StoreBuilds
     "#{project_name}/#{suite_name}/#{build_number}/#{filename}"
   end
 
-  def save_in_s3(uri, build, artifact_data)
+  def save_in_s3(s3_key, artifact_data)
     s3 = Aws::S3::Client.new
 
     s3.put_object(
         bucket: ENV['AWS_BUCKET'],
-        key: artifact_s3_path(uri, build),
+        key: s3_key,
         body: artifact_data,
         acl: 'authenticated-read',
-        content_type: "text/xml"
+        content_type: "text/xml",
     )
+  end
+
+  def present_in_s3?(s3_key)
+    s3 = Aws::S3::Client.new
+
+    s3.get_object(
+        bucket: ENV['AWS_BUCKET'],
+        key: s3_key,
+    )
+    true
+  rescue Aws::S3::Errors::NoSuchKey
+    false
   end
 
 end
