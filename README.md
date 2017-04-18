@@ -2,8 +2,11 @@
 
 This system moves CircleCI junit artifacts into S3.  They could be retrieved by anything, including an awesome [JUnit visualizer](https://github.com/avvo/junit_visualizer).
 
-CircleCI will produce JUnit artifacts using this gem: https://github.com/circleci/minitest-ci
-If you are using rspec instead of minitest, use https://github.com/sj26/rspec_junit_formatter.  Example command: `bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/test_results.xml`
+CircleCI will produce JUnit artifacts using certain gems to format the output.
+
+ * minitest: https://github.com/circleci/minitest-ci (simple drop-in gem, no configuring)
+ * rspec: https://github.com/sj26/rspec_junit_formatter
+    Example command: `bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/test_results.xml`
 
 These environment variables are required:
 
