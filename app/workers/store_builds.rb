@@ -51,7 +51,7 @@ class StoreBuilds
       if artifact_data.present? && !present_in_s3?(s3_key)
         save_in_s3(s3_key, artifact_data)
       else
-        warn "Artifact has no data - #{uri.to_s}"
+        warn "Artifact has no data - #{uri.to_s} for #{build['username']}/#{build['reponame']} build ##{build['build_num']} - #{build['build_url']}"
       end
     end
   end
