@@ -43,6 +43,8 @@ class StoreBuilds
     uri = URI.parse(artifact['url'])
     uri.query = {'circle-token' => CircleCi.config.token}.to_query
 
+    puts "found uri: #{uri}"
+
     if junit_artifact?(uri)
       artifact_data = Net::HTTP.get(uri)
 
