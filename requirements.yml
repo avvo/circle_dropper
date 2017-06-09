@@ -3,16 +3,16 @@ stack_name: circle-dropper
 image: avvo/circle_dropper
 facing: backend
 start_before_stop: false
-
-additional_services:
-  redis:
-    image: redis:3.0
-    service_port: 6379
-    container_name: redis
-
 workers:
   - name: sidekiq
     command: bin/sidekiq
+
+additional_services:
+  redis:
+    image: redis:3.0-alpine
+    service_port: 6379
+    container_name: redis
+
 health_check: false
 routing:
   port: 3000
