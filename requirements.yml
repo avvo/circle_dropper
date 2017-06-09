@@ -1,9 +1,7 @@
-service_name: circle_dropper
-stack_name: circle_dropper
+service_name: circle-dropper
+stack_name: circle-dropper
 image: avvo/circle_dropper
 facing: backend
-pre-deploy: false
-post-deploy: false
 start_before_stop: false
 
 additional_services:
@@ -15,3 +13,8 @@ additional_services:
 workers:
   - name: sidekiq
     command: bin/sidekiq
+health_check: false
+routing:
+  port: 3000
+  subdomain: circle_dropper
+
