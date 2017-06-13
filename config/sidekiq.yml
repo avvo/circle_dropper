@@ -6,6 +6,14 @@ test:
   url: 'redis://<%= ENV.fetch("REDIS_HOST", "localhost") %>:<%= ENV.fetch("REDIS_PORT", "6379") %>/11'
   namespace: 'sidekiq-test'
 
+ec2:
+  url: 'redis://<%= ENV.fetch("REDIS_HOST", "localhost") %>:<%= ENV.fetch("REDIS_PORT", "6379") %>/11'
+  namespace: 'circle-dropper-sidekiq'
+
+stag:
+  url: 'redis://<%= ENV.fetch("REDIS_HOST", "localhost") %>:<%= ENV.fetch("REDIS_PORT", "6379") %>/11'
+  namespace: 'circle-dropper-sidekiq'
+
 production:
   url: 'redis://<%= ENV.fetch("REDIS_HOST", "localhost") %>:<%= ENV.fetch("REDIS_PORT", "6379") %>/12'
   namespace: 'circle-dropper-sidekiq'
