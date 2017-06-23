@@ -31,3 +31,4 @@ A docker image of this project is available at https://hub.docker.com/r/avvo/cir
 To set up fully in docker, deploy that container twice, and link one to the other.  Set the second linked container's deploy command to bin/sidekiq.  Then link a redis container (probably redis:3.0-alpine) to BOTH circle_dropper containers.  Then set the above required environment variables on the two circle_dropper containers.
 
 This system uses sidekiq and redis.
+
