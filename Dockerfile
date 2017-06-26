@@ -1,4 +1,4 @@
-FROM avvo/ruby-rails
+FROM avvo/ruby-rails:2.3.3
 MAINTAINER Seth Ringling <sringling@avvo.com>
 
 ENV APP_HOME /srv/circle_dropper/current
