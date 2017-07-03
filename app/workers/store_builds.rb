@@ -10,9 +10,11 @@ class StoreBuilds
   end
 
   def perform
-    recent_builds = CircleCi::RecentBuilds.get
-    if recent_builds.success?
-      recent_builds.body.each do |build|
+    recent_builds = CircleCi::RecentBuilds.new
+
+    builds = recent_builds.get
+    if builds.success?
+      builds.body.each do |build|
         if process_build?(build)
           process_build(build)
         end
@@ -25,7 +27,8 @@ class StoreBuilds
   private
 
   def process_build(build)
-    artifacts = CircleCi::Build.artifacts(build['username'], build['reponame'], build['build_num'])
+    circleci_build = CircleCi::Build.new(build['username'], build['reponame'], nil, build['build_num'])
+    artifacts = circleci_build.artifacts
     if artifacts.success?
       if artifacts.body.size > 0
         artifacts.body.each do |artifact|

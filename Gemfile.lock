@@ -48,7 +48,7 @@ GEM
     byebug (9.0.6)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    circleci (1.1.0)
+    circleci (2.0.0)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     dotenv (2.1.0)
