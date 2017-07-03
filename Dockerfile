@@ -5,7 +5,7 @@ ENV APP_HOME /srv/circle_dropper/current
 
 RUN apk update && \
     apk upgrade && \
-    apk add build-base && \	
+    apk add build-base && \
     rm -rf /var/cache/apk/*
 
 RUN mkdir -p $APP_HOME

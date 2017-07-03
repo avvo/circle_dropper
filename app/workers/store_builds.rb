@@ -6,13 +6,15 @@ class StoreBuilds
                   retry: false
 
   recurrence do
-    minutely(5)
+    hourly.minute_of_hour(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55)
   end
 
   def perform
-    recent_builds = CircleCi::RecentBuilds.get
-    if recent_builds.success?
-      recent_builds.body.each do |build|
+    recent_builds = CircleCi::RecentBuilds.new
+
+    builds = recent_builds.get
+    if builds.success?
+      builds.body.each do |build|
         if process_build?(build)
           process_build(build)
         end
@@ -25,7 +27,8 @@ class StoreBuilds
   private
 
   def process_build(build)
-    artifacts = CircleCi::Build.artifacts(build['username'], build['reponame'], build['build_num'])
+    circleci_build = CircleCi::Build.new(build['username'], build['reponame'], nil, build['build_num'])
+    artifacts = circleci_build.artifacts
     if artifacts.success?
       if artifacts.body.size > 0
         artifacts.body.each do |artifact|
@@ -50,10 +53,14 @@ class StoreBuilds
 
       s3_key = artifact_s3_path(uri, build)
 
-      if artifact_data.present? && !present_in_s3?(s3_key)
-        save_in_s3(s3_key, artifact_data)
+      if present_in_s3?(s3_key)
+        warn "Artifact already present in s3 - #{uri.to_s} for #{build['username']}/#{build['reponame']} build ##{build['build_num']} - #{build['build_url']}"
       else
-        warn "Artifact has no data - #{uri.to_s} for #{build['username']}/#{build['reponame']} build ##{build['build_num']} - #{build['build_url']}"
+        if artifact_data.present?
+          save_in_s3(s3_key, artifact_data)
+        else
+          warn "Artifact has no data - #{uri.to_s} for #{build['username']}/#{build['reponame']} build ##{build['build_num']} - #{build['build_url']}"
+        end
       end
     end
   end
