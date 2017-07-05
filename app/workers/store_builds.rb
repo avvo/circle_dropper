@@ -6,7 +6,7 @@ class StoreBuilds
                   retry: false
 
   recurrence do
-    hourly.minute_of_hour(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55)
+    hourly.minute_of_hour((0..59).step(5).to_a)
   end
 
   def perform
