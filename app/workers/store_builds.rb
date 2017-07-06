@@ -73,7 +73,11 @@ class StoreBuilds
     filename = uri.path.split('/').last;
 
     project_name = "#{build['username']}_#{build['reponame']}"
-    suite_name = "SUITE=#{uri.path.split('/')[-2]}"
+
+    suite = uri.path.split('/')[-2]
+    suite = build['reponame'] if suite == "circle-junit"
+
+    suite_name = "SUITE=#{suite}"
     build_number = "build_number_#{build['build_num']}"
 
     "#{project_name}/#{suite_name}/#{build_number}/#{filename}"
