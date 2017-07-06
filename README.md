@@ -20,7 +20,7 @@ These environment variables are required:
 
 Learn more about [AWS environment variables](https://github.com/aws/aws-sdk-ruby)
 
-With CircleCi 2.0, you need to explicitly save the test artifacts. In your config.yml, inlude the following:
+With CircleCi 2.0, you need to explicitly save the test artifacts. In your config.yml, include the following:
 ```
 - store_artifacts:
   path: /<path to project>/test/reports
