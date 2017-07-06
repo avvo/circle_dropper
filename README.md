@@ -20,6 +20,14 @@ These environment variables are required:
 
 Learn more about [AWS environment variables](https://github.com/aws/aws-sdk-ruby)
 
+With CircleCi 2.0, you need to explicitly save the test artifacts. In your config.yml, inlude the following:
+```
+- store_artifacts:
+  path: /<path to project>/test/reports
+  destination: circle-junit
+```
+Specifying the `circle-junit` destination ensures that circle dropper only tries to read/upload junit.xml files.
+
 Optional environment variables:
 
 * BRANCHES - specify a csv of branches and we will pull only those.  For example if you want to collect data only for master, set BRANCHES=master
